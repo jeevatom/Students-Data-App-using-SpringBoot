@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Success</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container">
+        <h2>Success</h2>
+        <div class="alert alert-success" role="alert">
+            <p th:text="${message}"></p>
+        </div>
+        <a href="/students/register" class="btn btn-primary">Register Another Student</a>
+    </div>
+</body>
+</html>
