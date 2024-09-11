@@ -1,8 +1,9 @@
 package com.java.students_base.service;
 
-import com.java.students_base.UserRepository.UserRepository;
-import com.java.students_base.model.User;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -10,7 +11,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import com.java.students_base.UserRepository.UserRepository;
+import com.java.students_base.model.User;
 
 @Service
 public class UserService implements UserDetailsService {
@@ -27,9 +29,21 @@ public class UserService implements UserDetailsService {
                 List.of(new SimpleGrantedAuthority(user.getRole())));
     }
 
-    public void registerUser(User user) {
-        user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
-        user.setRole("ROLE_USER");
-        userRepository.save(user);
+   public String registerUser(User user) {
+        try {
+          
+            user.setPassword(new BCryptPasswordEncoder(12).encode(user.getPassword()));
+            user.setRole("ROLE_USER");
+
+          
+            userRepository.save(user);
+            return "SUCCESS";
+
+        } catch (DataIntegrityViolationException e) {
+            
+            return "USERNAME_EXISTS";
+        } catch (Exception e) {
+            return "ERROR";
+        }
     }
 }

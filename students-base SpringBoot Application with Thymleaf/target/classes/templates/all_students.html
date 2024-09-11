@@ -5,6 +5,15 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 </head>
 <body>
+    <nav class="navbar bg-body-tertiary">
+        <div class="container-fluid">
+          <a class="navbar-brand">Students Details</a>
+          <form class="d-flex" role="search">
+            <div>
+            <a class="btn btn-outline-primary" th:href="@{/students/addStudent}">Add Student_Info</a></div>
+            <div> <a class="btn btn-outline-danger" th:href="@{/logout}" type="submit">Logout</a></div>
+        </div>
+      </nav>
 
 <div class="container">
     <h1 class="mt-5">List of Students</h1>
@@ -18,7 +27,8 @@
         </tr>
         </thead>
         <tbody>
-        <!-- Thymeleaf loop to iterate over the students -->
+      
+            
         <tr th:each="student : ${students}">
             <td th:text="${student.id}"></td>
             <td th:text="${student.name}"></td>
@@ -26,7 +36,9 @@
             <td th:text="${student.markDetails}"></td>
         </tr>
         </tbody>
-    </table>
+
+    </table>  
+
 </div>
 
 </body>
