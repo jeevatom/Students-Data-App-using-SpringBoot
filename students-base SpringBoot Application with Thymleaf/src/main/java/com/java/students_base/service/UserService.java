@@ -10,15 +10,20 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-
+import java.time.LocalDateTime;
 import com.java.students_base.UserRepository.UserRepository;
+import com.java.students_base.UserRepository.UserSessionRepository;
 import com.java.students_base.model.User;
+import com.java.students_base.model.UserSession;
 
 @Service
 public class UserService implements UserDetailsService {
 
     @Autowired
     private UserRepository userRepository;
+ 
+    @Autowired
+    private UserSessionRepository userSessionRepository;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -46,4 +51,21 @@ public class UserService implements UserDetailsService {
             return "ERROR";
         }
     }
+
+
+public void saveUserSession(String sessionId) {
+        UserSession userSession = new UserSession();
+        userSession.setSessionId(sessionId);
+        userSession.setLoginTime(LocalDateTime.now());
+        userSessionRepository.save(userSession);
+    }
+
+    public void updateLogoutTime(String sessionId) {
+        UserSession userSession = userSessionRepository.findBySessionId(sessionId);
+        if (userSession != null) {
+            userSession.setLogoutTime(LocalDateTime.now());
+            userSessionRepository.save(userSession);
+        }
+    }
+
 }

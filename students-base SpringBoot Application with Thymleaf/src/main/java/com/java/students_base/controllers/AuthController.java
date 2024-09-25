@@ -16,7 +16,7 @@ public class AuthController {
     @Autowired
     private UserService userService;
 
-    @GetMapping("/login")
+    @GetMapping("/")
     public String login() {
         return "login";
     }
@@ -32,7 +32,7 @@ public class AuthController {
 
         if ("SUCCESS".equals(result)) {
             redirectAttributes.addFlashAttribute("successMessage", "Registration successful! Please log in.");
-            return "redirect:/login";
+            return "redirect:/";
         } else if ("USERNAME_EXISTS".equals(result)) {
             redirectAttributes.addFlashAttribute("errorMessage", "Username already exists. Please choose another.");
             return "redirect:/register";
